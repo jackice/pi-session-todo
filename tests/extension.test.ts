@@ -157,13 +157,14 @@ describe("session-todo extension", () => {
     expect(mock.appended).toHaveLength(0);
   });
 
-  it("rehydrates on session_tree", async () => {
+  it("rehydrates on session_tree and persists a branch marker", async () => {
     const mock = createMockPi();
     await fire(mock, "session_start", { reason: "startup" });
     await execute(mock, { action: "init", phases: [{ name: "First", tasks: [{ content: "a" }] }] });
     await fire(mock, "session_tree", {});
     expect(renderWidget(mock)).toContain("First");
     expect(mock.ui.setWidget.mock.calls.length).toBeGreaterThanOrEqual(2);
+    expect(mock.appended.at(-1)?.customType).toBe("session-todo-branch");
   });
 
   it("hides the HUD after all tasks complete", async () => {
@@ -218,5 +219,23 @@ describe("session-todo extension", () => {
     const text = result.content[0];
     if (text?.type !== "text") throw new Error("missing text result");
     expect(text.text).toContain("read-only");
+  });
+
+  it("is read-only in subagent child processes", async () => {
+    vi.stubEnv("PI_SUBAGENT_CHILD", "1");
+    try {
+      const mock = createMockPi();
+      await fire(mock, "session_start", { reason: "startup" });
+      const write = await execute(mock, {
+        action: "init",
+        phases: [{ name: "Phase", tasks: [{ content: "a" }] }],
+      });
+      expect(write.isError).toBe(true);
+      expect(mock.appended).toHaveLength(0);
+      const read = await execute(mock, { action: "view" });
+      expect(read.isError).toBeUndefined();
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 });

@@ -72,6 +72,18 @@ export function createSessionTodoTool(
     parameters: sessionTodoParams,
     executionMode: "sequential",
     async execute(_toolCallId, params, _signal, _onUpdate, _ctx) {
+      if (process.env.PI_SUBAGENT_CHILD === "1" && params.action !== "view") {
+        return {
+          content: [
+            {
+              type: "text",
+              text: "session_todo is read-only in subagents; report progress to the parent session instead",
+            },
+          ],
+          isError: true,
+          details: { version: 1, snapshot: { version: 1, revision: 0, mode: "serial", phases: [] } },
+        };
+      }
       const session = getSession();
       if (session === undefined) {
         return {

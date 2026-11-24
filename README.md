@@ -40,7 +40,9 @@ pi install npm:@jackice/pi-session-todo
 - 无实际变化（重复 `done`、重复 `start`）不追加、不递增 revision
 - `--no-session` 下仅内存可用；首条消息前不会写 session 文件
 - `reload`/`new`/`fork`/`switch` 后从当前 branch 反向查找最新合法快照
+- `session_tree` 后追加轻量 `session-todo-branch` 标记，固定回退点，避免 switch/reload 后回到旧叶节点
 - 最新快照损坏时进入只读降级：仍展示最后可识别快照，拒绝写操作
+- 子代理（`PI_SUBAGENT_CHILD=1`）仅允许 `view`，写入返回错误，结果由父 Session 记录
 - 上限：50 阶段、200 任务、单任务 500 字、快照 64 KiB
 
 ## HUD
@@ -82,6 +84,12 @@ PI_SESSION_TODO_HIDE_MS=60000
 | `-1` 禁用隐藏 | 12s 后 HUD 仍显示 |
 | 写入失败 | `appendEntry` 抛错时工具报错且内存状态不变 |
 | 快照损坏 | 只读降级，拒绝写入 |
+| parallel | 两个任务同时 `in_progress`，不自动推进；append/rm 后 HUD 正确 |
+| 项目级 todo 共存 | 同一进程内 `todo` 列表/claim 与 `session_todo` HUD 同时工作 |
+| 分支回退 | navigateTree 后 HUD 回退；标记 entry 使 switch/reload 后仍保持回退状态 |
+| 新/切换 Session | 新 Session HUD 为空，切回恢复；同屏仅一个 HUD |
+| 取消切换 | `session_before_switch` 取消后 HUD 与 Session 不变 |
+| 子代理只读 | `PI_SUBAGENT_CHILD=1` 下写入被拒绝，`view` 可用 |
 
 单元/集成测试：
 
@@ -93,7 +101,8 @@ pnpm test
 
 ## 限制
 
-- 尚未强制“仅主 Session 可写”；子代理身份识别与结果通道未接入
+- 子代理通过 `PI_SUBAGENT_CHILD=1` 识别并只读；其他自定义执行器若未设置该变量仍可写
 - `/tree` UI 本身的取消路径、切换/回收期间的排队写入尚未补测
+- 项目级 `todo` 已验证列表与 claim；状态 update 的真机工具链未单独覆盖
 - 不迁移、不同步项目级 `todo` / `/todos`
 - 未实现持久授权、Workflow 调度或子代理自动启动

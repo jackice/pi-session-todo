@@ -9,6 +9,7 @@ import { createSessionTodoWidget, TODO_WIDGET_KEY } from "./src/widget.ts";
 const DEFAULT_HIDE_MS = 60_000;
 
 export default function sessionTodoExtension(pi: ExtensionAPI): void {
+  const branchMarker = "session-todo-branch";
   let session: TodoSession | undefined;
   let currentCtx: ExtensionContext | undefined;
   let widgetVisible = true;
@@ -138,6 +139,15 @@ export default function sessionTodoExtension(pi: ExtensionAPI): void {
     currentCtx = ctx;
     clearHideTimer();
     session?.reload();
+    if (session !== undefined && session.snapshot.phases.length > 0 && !session.degraded) {
+      try {
+        // navigateTree 无 label 时不会自行落盘叶节点；标记 entry 固定当前分支，
+        // 使 switch/reload 后仍能读取回退点的快照。
+        pi.appendEntry(branchMarker, { revision: session.snapshot.revision });
+      } catch {
+        // 标记仅用于持久化分支选择，失败不阻塞 HUD。
+      }
+    }
     widgetExpanded = false;
     widgetVisible = true;
     mountWidget(ctx);
