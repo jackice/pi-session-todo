@@ -35,7 +35,7 @@
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
     "@earendil-works/pi-tui": "^1.6.0",
-    "@jackice/pi-ui": "^0.3.0"
+    "@jackice/pi-ui": "^0.4.1"
   },
   "devDependencies": {
     "@earendil-works/pi-coding-agent": "1.6.0",

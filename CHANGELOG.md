@@ -2,6 +2,7 @@
 
 ## 0.1.0
 
+- 将 `@jackice/pi-ui` 的 peer 依赖统一到 `^0.4.1`，与审批扩展共用同一版本。
 - 新增 `session_todo` 工具：`init` / `view` / `start` / `done` / `drop` / `rm` / `append`
 - 新增 version 1 Session 快照持久化、revision、compare-and-set 与损坏快照只读降级
 - 新增串行自动推进、并行显式启动与稳定任务/阶段 ID

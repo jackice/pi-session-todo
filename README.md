@@ -2,7 +2,7 @@
 
 Pi 的 Session 级 TODO 工具与常驻 HUD。项目级 `todo`（`.pi/todos`、`/todos`）保持不变，两者互不迁移、互不同步。
 
-- 基线：Pi `1.6.0`、`@jackice/pi-ui` `0.3.0`、`@earendil-works/pi-tui` `1.6.0`
+- 基线：Pi `1.6.0`、`@jackice/pi-ui` `0.4.2`、`@earendil-works/pi-tui` `1.6.0`
 - 状态：P3 store/tool/HUD 主路径已实现并通过真实 Pi TUI 探针
 - 不修改原生 Pi，不接管项目级 TODO，不执行子代理或 Workflow 调度
 
