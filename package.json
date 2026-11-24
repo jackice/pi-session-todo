@@ -5,6 +5,10 @@
   "type": "module",
   "license": "MIT",
   "author": "jackice",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackice/pi-session-todo.git"
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

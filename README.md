@@ -8,10 +8,10 @@ A session-scoped TODO tool and persistent HUD for Pi. It does not replace, migra
 
 ## Installation
 
-This extension is not yet published. After release, install it with:
+Install the preview with Pi:
 
 ```bash
-pi install npm:@jackice/pi-session-todo
+pi install npm:@jackice/pi-session-todo@0.1.0
 ```
 
 The extension entry point is `./index.ts`. `@jackice/pi-ui` and `@earendil-works/pi-tui` are peer dependencies.
