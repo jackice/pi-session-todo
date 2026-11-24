@@ -103,6 +103,5 @@ pnpm test
 
 - 子代理通过 `PI_SUBAGENT_CHILD=1` 识别并只读；其他自定义执行器若未设置该变量仍可写
 - `/tree` UI 本身的取消路径、切换/回收期间的排队写入尚未补测
-- 项目级 `todo` 已验证列表与 claim；状态 update 的真机工具链未单独覆盖
-- 不迁移、不同步项目级 `todo` / `/todos`
+- 项目级 `todo` 已真机验证列表、claim 与 status update；仍不迁移、不同步
 - 未实现持久授权、Workflow 调度或子代理自动启动
