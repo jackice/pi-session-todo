@@ -4,3 +4,5 @@ allowBuilds:
   esbuild: true
   "@google/genai": false
   protobufjs: false
+minimumReleaseAgeExclude:
+  - '@jackice/pi-ui@0.4.2'
