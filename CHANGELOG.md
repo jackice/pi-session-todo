@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- 将 `@jackice/pi-ui` 声明为运行时依赖，修复 `pi install` 省略 peer 后扩展无法加载的问题。
+- 由 Pi 提供 TUI 与 TypeBox；不再安装额外的 TypeBox 运行时。
+
 ## 0.1.0
 
 - 将 `@jackice/pi-ui` 的 peer 依赖统一到 `^0.4.1`，与审批扩展共用同一版本。

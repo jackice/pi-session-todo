@@ -11,10 +11,10 @@ A session-scoped TODO tool and persistent HUD for Pi. It does not replace, migra
 Install the preview with Pi:
 
 ```bash
-pi install npm:@jackice/pi-session-todo@0.1.0
+pi install npm:@jackice/pi-session-todo@0.1.1
 ```
 
-The extension entry point is `./index.ts`. `@jackice/pi-ui` and `@earendil-works/pi-tui` are peer dependencies.
+The extension entry point is `./index.ts`. Pi installs `@jackice/pi-ui` with the extension and supplies Pi TUI and TypeBox at runtime.
 
 ## Tool
 
